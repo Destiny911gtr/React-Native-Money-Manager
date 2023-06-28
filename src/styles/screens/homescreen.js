@@ -112,16 +112,12 @@ export const styles = StyleSheet.create({
 
 export function itemStyle(id, listData) {
     if (listData.length == 1) {
-        console.log(listData)
         return { ...styles.singleItemStyle }
     } else if (id == listData.length) {
-        console.log(listData)
         return { ...styles.lastItemStyle }
     } else if (id == 1) {
-        console.log(listData)
         return { ...styles.firstItemStyle }
     } else if (id > 1 && id < listData.length) {
-        console.log(listData)
         return true
     }
 }

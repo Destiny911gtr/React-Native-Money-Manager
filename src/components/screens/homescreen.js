@@ -12,10 +12,10 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { removeExpense, setBalance, setExpense, setLimit } from '../../actions/homeScreenActions';
+import { addExpense, removeExpense, setBalance, setLimit } from '../../actions/homeScreenActions';
 import { itemStyle, styles } from '../../styles/screens/homescreen';
 import { Expenditure, realmConfig } from '../../utils/database';
-import { dateConvertor, getData, renderDescription, storeData } from '../../utils/helperFuntions';
+import { dateConvertor, renderDescription, storeData } from '../../utils/helperFuntions';
 import { DoubleEntryDialog } from '../dialogs/doubleEntryDialog';
 import { GenericDialog } from '../dialogs/genericDialog';
 import Dashboard from '../modules/dashboard';
@@ -75,7 +75,7 @@ function Homescreen() {
     };
 
     const setRdxExpense = expense => {
-        dispatch(setExpense(expense));
+        dispatch(addExpense(expense));
     }
 
     const rmRdxExpense = expense => {
