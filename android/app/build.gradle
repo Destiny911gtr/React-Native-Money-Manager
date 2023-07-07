@@ -117,6 +117,18 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('personal_key.keystore')
+            println "Enter keystore password"
+            def password = System.in.newReader().readLine()
+            println "Enter keystore alias"
+            def alias = System.in.newReader().readLine()
+            println "Enter keystore alias password"
+            def aliaspw = System.in.newReader().readLine()
+            storePassword password
+            keyAlias alias
+            keyPassword aliaspw
+        }
     }
     buildTypes {
         debug {

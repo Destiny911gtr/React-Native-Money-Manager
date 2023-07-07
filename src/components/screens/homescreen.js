@@ -136,24 +136,14 @@ function Homescreen() {
     );
 
     return (
-        <SafeAreaView
+        <View
             style={{ ...styles.screen, backgroundColor: theme.colors.background }}>
-            <StatusBar barStyle={statusBarStyle} backgroundColor={theme.colors.background} />
-            <Appbar.Header>
-                <Appbar.Content
-                    title="Stonks"
-                    titleStyle={styles.title_text}
-                    style={styles.title_item}
-                />
-            </Appbar.Header>
+            <StatusBar barStyle={statusBarStyle} backgroundColor="transparent" translucent={true} />
             <View style={styles.home_view}>
-                <View style={styles.heading_row}>
-                    <Text numberOfLines={1} style={styles.main_text}>Hello!</Text>
-                    <Icon name="hand-wave" size={25} color={theme.colors.onSurface} />
-                </View>
                 <Dashboard
                     primary={theme.colors.primaryContainer}
                     secondary={theme.colors.secondaryContainer}
+                    textColor={theme.colors.onSurface}
                     limitDialog={limitModalTrigger}
                     balanceDialog={balanceModalTrigger}
                 />
@@ -220,7 +210,7 @@ function Homescreen() {
                 />
             </Portal>
             <Fab />
-        </SafeAreaView>
+        </View>
     );
 }
 

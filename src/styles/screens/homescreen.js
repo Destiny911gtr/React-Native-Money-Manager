@@ -1,31 +1,15 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-const windowWidth = Dimensions.get('window').width;
+const { height, width } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
     screen: {
-        flex: 1,
-    },
-    title_item: {
-        alignItems: 'flex-start',
-    },
-    title_text: {
-        fontFamily: 'Open Sans',
+        flex: 1
     },
     home_view: {
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
-    },
-    heading_row: {
-        paddingHorizontal: 15,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    main_text: {
-        fontSize: 30,
-        fontFamily: 'Open Sans',
-        paddingRight: 10
     },
     info_grid: {
         paddingHorizontal: 15,
@@ -65,7 +49,7 @@ export const styles = StyleSheet.create({
     },
     list_view: {
         flex: 1,
-        width: windowWidth,
+        width: width,
         paddingHorizontal: 15
     },
     bal_box: {
@@ -81,7 +65,7 @@ export const styles = StyleSheet.create({
     placeholder: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: windowWidth
+        width: width
     },
     placeholder_text: {
         padding: 20,
