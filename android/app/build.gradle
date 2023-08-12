@@ -118,16 +118,12 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('personal_key.keystore')
-            println "Enter keystore password"
-            def password = System.in.newReader().readLine()
-            println "Enter keystore alias"
-            def alias = System.in.newReader().readLine()
-            println "Enter keystore alias password"
-            def aliaspw = System.in.newReader().readLine()
-            storePassword password
-            keyAlias alias
-            keyPassword aliaspw
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
         }
     }
     buildTypes {
@@ -137,7 +133,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

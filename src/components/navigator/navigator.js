@@ -1,28 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CommonActions, NavigationContainer } from '@react-navigation/native';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch } from 'react-redux';
 
 import Homescreen from '../screens/homescreen';
 import Secondscreen from '../screens/secondscreen';
 
-import { getData } from '../../utils/helperFuntions';
-import { setBalance, setExpense, setLimit } from '../../actions/homeScreenActions';
 
 const Tab = createBottomTabNavigator();
 
 export default Navigator = () => {
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        getData('@limit').then((limit) => dispatch(setLimit(limit)));
-        getData('@balance').then((balance) => dispatch(setBalance(balance)));
-        getData('@spent').then((spent) => dispatch(setExpense(spent)));
-    }, []);
-
     return (
         <NavigationContainer>
             <Tab.Navigator

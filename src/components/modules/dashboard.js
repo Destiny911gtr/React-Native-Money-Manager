@@ -1,21 +1,25 @@
 import { TouchableOpacity, View } from "react-native";
-import { Text } from "react-native-paper";
+import { ProgressBar, Text } from "react-native-paper";
 import { connect } from "react-redux";
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Lottie from 'lottie-react-native';
 
 import { styles } from "../../styles/modules/dashboard";
 
 const mapStateToProps = (state) => ({
     limit: state.limit,
     spent: state.spent,
-    balance: state.balance
+    balance: state.balance,
+    initialBalance: state.initialBalance
 })
 
-const Dashboard = ({ limit, spent, balance, limitDialog, balanceDialog, primary, secondary, textColor }) => {
+const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balanceDialog, primary, secondary, textColor }) => {
+
+    var currentBal = initialBalance - spent;
+    var balancePercentage = initialBalance == '0' ? 0 : parseFloat(balance / initialBalance);
 
     limitTrigger = () => {
+        console.log(balance, initialBalance, balancePercentage);
         limitDialog();
     }
 
@@ -59,7 +63,7 @@ const Dashboard = ({ limit, spent, balance, limitDialog, balanceDialog, primary,
             style={styles.bal_box}>
             <View>
                 <Text style={styles.label_style}>Balance</Text>
-                <Text numberOfLines={1} style={styles.value_style}>₹{balance}</Text>
+                <Text numberOfLines={1} style={styles.value_style}>₹{currentBal}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -71,8 +75,9 @@ const Dashboard = ({ limit, spent, balance, limitDialog, balanceDialog, primary,
                 backgroundColor: secondary
             }}>
                 <GreetWidget />
-                <View style={styles.animation}>
-                    <Lottie source={require('../../assets/lottie/lottieanimation-phone.json')} autoPlay={true} loop={true} />
+                <View style={styles.animation_view}>
+                    <ProgressBar progress={balancePercentage} color={"rgba(0, 255, 225, 0.75)"} style={styles.progress_bar} />
+                    <ProgressBar progress={0.5} color={"rgba(0, 255, 225, 0.75)"} style={styles.progress_bar} />
                 </View>
                 <View style={{
                     ...styles.info_row,

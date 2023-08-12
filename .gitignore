@@ -61,4 +61,9 @@ yarn-error.log
 
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
+
 android/app/src/main/assets/index.android.bundle
+android/app/gradle.properties
+
+yarn.lock
+package-lock.json

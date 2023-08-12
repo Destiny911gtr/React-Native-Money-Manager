@@ -6,26 +6,35 @@ const headerHeight = 350;
 
 export const styles = StyleSheet.create({
     container: {
-        height: headerHeight + 70,
+        height: headerHeight + 70
     },
     dashboard: {
         width: width,
         height: headerHeight,
     },
-    animation: {
-        flex: 1,
-        height: 200,
-        width: 200,
-        marginBottom: 50,
+    animation_view: {
+        height: headerHeight - 70,
+        width: width,
+        // marginBottom: -25,
         alignContent: 'center',
         justifyContent: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        alignItems: 'center',
+        // padding: -10,
+    },
+    progress_bar: {
+        height: 20,
+        width: width - 100,
+        marginVertical: 10,
+        borderRadius: 10,
+        backgroundColor: '#fff'
     },
     header_text: {
         fontSize: 15,
         fontFamily: 'Open Sans',
     },
     info_row: {
+        elevation: 10,
         top: headerHeight - 50,
         left: 25,
         width: width - 50,

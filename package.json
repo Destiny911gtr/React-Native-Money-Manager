@@ -31,6 +31,7 @@
     "realm-flipper-plugin-device": "^1.1.0",
     "redux": "^4.2.1",
     "redux-flipper": "^2.0.2",
+    "redux-persist": "^6.0.0",
     "rn-async-storage-flipper": "^0.0.10"
   },
   "devDependencies": {

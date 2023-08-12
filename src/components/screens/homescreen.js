@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addExpense, removeExpense, setBalance, setLimit } from '../../actions/homeScreenActions';
+import { addExpense, removeExpense, setBalance, setInitBalance, setLimit } from '../../actions/homeScreenActions';
 import { itemStyle, styles } from '../../styles/screens/homescreen';
 import { Expenditure, realmConfig } from '../../utils/database';
 import { dateConvertor, renderDescription, storeData } from '../../utils/helperFuntions';
@@ -72,6 +72,7 @@ function Homescreen() {
 
     const setRdxBalance = balance => {
         dispatch(setBalance(balance));
+        dispatch(setInitBalance(balance));
     };
 
     const setRdxExpense = expense => {
@@ -169,6 +170,7 @@ function Homescreen() {
                 )}
             </View>
             <Portal>
+                {/* Set Limit Dialog */}
                 <GenericDialog
                     backgroundColor={theme.colors.background}
                     foregroundColor={theme.colors.secondary}
@@ -182,6 +184,7 @@ function Homescreen() {
                     description={"Enter your maximum expenditure limit for a month"}
                     icon={"cash-fast"}
                 />
+                {/* Set Balance Dialog */}
                 <GenericDialog
                     backgroundColor={theme.colors.background}
                     foregroundColor={theme.colors.secondary}
@@ -195,6 +198,7 @@ function Homescreen() {
                     description={"Enter your account balance available for expenditure"}
                     icon={"cash-multiple"}
                 />
+                {/* Add Expense Dialog */}
                 <DoubleEntryDialog
                     backgroundColor={theme.colors.background}
                     foregroundColor={theme.colors.secondary}

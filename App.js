@@ -12,9 +12,10 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import RNAsyncStorageFlipper from 'rn-async-storage-flipper';
 import RealmPlugin from 'realm-flipper-plugin-device';
+import { PersistGate } from 'redux-persist/integration/react'
 
 import Navigator from './src/components/navigator/navigator';
-import store from './src/store/configureStore';
+import { store, persistor } from './src/store/configureStore';
 import * as constants from './src/styles/colors/constants';
 import { realmConfig } from './src/utils/database';
 
@@ -30,11 +31,14 @@ const App = () => {
 
   return (
     <RealmProvider>
-      {__DEV__ && <RealmPlugin realms={[realmConfig]} /> } {/* Flipper realm db plugin */}
+      {/* Flipper realm db plugin */}
+      {__DEV__ && <RealmPlugin realms={[realmConfig]} />}
       <Provider store={store}>
-        <PaperProvider theme={constants.darkTheme}>
-          <Navigator />
-        </PaperProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <PaperProvider theme={constants.darkTheme}>
+            <Navigator />
+          </PaperProvider>
+        </PersistGate>
       </Provider>
     </RealmProvider>
   );

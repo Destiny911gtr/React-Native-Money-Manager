@@ -1,10 +1,8 @@
-import { storeData } from "../utils/helperFuntions";
-import { ADD_EXPENSE, REMOVE_EXPENSE, SET_BAL, SET_EXPENSE, SET_LIMIT } from "./types";
+import { ADD_EXPENSE, INIT_BAL, REMOVE_EXPENSE, SET_BAL, SET_EXPENSE, SET_LIMIT } from "./types";
 
 // Action Creators
 export const setLimit = (value) => {
   !value ? value = '0' : value;
-  storeData('@limit', value);
   return {
     type: SET_LIMIT,
     payload: value,
@@ -13,12 +11,19 @@ export const setLimit = (value) => {
 
 export const setBalance = (value) => {
   !value ? value = '0' : value;
-  storeData('@balance', value);
   return {
     type: SET_BAL,
     payload: value,
   }
 };
+
+export const setInitBalance = (value) => {
+  !value ? value = '0' : value;
+  return {
+    type: INIT_BAL,
+    payload: value,
+  }
+}
 
 export const setExpense = (value) => {
   !value ? value = '0' : value;
