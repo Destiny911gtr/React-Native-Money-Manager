@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StatusBar, View } from 'react-native';
+import { FlatList, StatusBar, View } from 'react-native';
 import {
-    Appbar,
     FAB,
     IconButton,
     List,
@@ -9,7 +8,6 @@ import {
     Text,
     useTheme
 } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addExpense, removeExpense, setBalance, setInitBalance, setLimit } from '../../actions/homeScreenActions';
@@ -22,7 +20,7 @@ import Dashboard from '../modules/dashboard';
 
 const { useRealm, useQuery } = realmConfig;
 
-function Homescreen() {
+const Homescreen = () => {
     const barStyles = ['default', 'dark-content', 'light-content'];
     const theme = useTheme();
     const dispatch = useDispatch();

@@ -18,6 +18,7 @@ import Navigator from './src/components/navigator/navigator';
 import { store, persistor } from './src/store/configureStore';
 import * as constants from './src/styles/colors/constants';
 import { realmConfig } from './src/utils/database';
+import LoadingScreen from './src/components/screens/loadingscreen';
 
 const { RealmProvider } = realmConfig;
 
@@ -34,7 +35,7 @@ const App = () => {
       {/* Flipper realm db plugin */}
       {__DEV__ && <RealmPlugin realms={[realmConfig]} />}
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate loading={<LoadingScreen />} persistor={persistor}>
           <PaperProvider theme={constants.darkTheme}>
             <Navigator />
           </PaperProvider>

@@ -10,7 +10,7 @@ import { enterAmount } from '../../utils/helperFuntions';
 
 const { useRealm, useQuery } = realmConfig;
 
-function Secondscreen() {
+const Secondscreen = () => {
     const theme = useTheme();
     const realm = useRealm();
     const listData = useQuery(Expenditure);
