@@ -1,6 +1,5 @@
-import moment from "moment";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import moment from "moment";
 
 export const enterAmount = amount => {
     const cleanedText = amount.replace(/[^0-9.]/g, '');
