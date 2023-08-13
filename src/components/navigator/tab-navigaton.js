@@ -8,12 +8,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Homescreen from '../screens/homescreen';
 import Secondscreen from '../screens/secondscreen';
 
-
 const Tab = createBottomTabNavigator();
 
-export default Navigator = () => {
+export default TabNavigation = () => {
     return (
-        <NavigationContainer>
             <Tab.Navigator
                 screenOptions={{
                     headerShown: false,
@@ -84,6 +82,5 @@ export default Navigator = () => {
                     }}
                 />
             </Tab.Navigator>
-        </NavigationContainer>
     );
 };

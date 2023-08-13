@@ -47,3 +47,10 @@ export const removeExpense = (value) => {
     payload: value,
   }
 };
+
+export const setRedux = (value, type) => {
+  return {
+    type: type,
+    payload: value
+  }
+}

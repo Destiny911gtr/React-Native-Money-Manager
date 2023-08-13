@@ -1,10 +1,11 @@
-import { ADD_EXPENSE, INIT_BAL, REMOVE_EXPENSE, SET_BAL, SET_EXPENSE, SET_LIMIT } from '../actions/types';
+import { ADD_EXPENSE, FIRST_LAUNCH, INIT_BAL, REMOVE_EXPENSE, SET_BAL, SET_EXPENSE, SET_LIMIT } from '../actions/types';
 
 const initialState = {
   limit: '0',
   balance: '0',
   initialBalance: '0',
   spent: '0',
+  firstLaunch: true
 };
 
 const homeScreen = (state = initialState, action) => {
@@ -21,6 +22,8 @@ const homeScreen = (state = initialState, action) => {
       return { ...state, spent: parseFloat(state.spent) + parseFloat(action.payload), balance: parseFloat(state.balance) - parseFloat(action.payload) };
     case REMOVE_EXPENSE:
       return { ...state, spent: parseFloat(state.spent) - parseFloat(action.payload), balance: parseFloat(state.balance) + parseFloat(action.payload) };
+    case FIRST_LAUNCH:
+      return { ...state, firstLaunch: action.payload };
     default:
       return state;
   }
