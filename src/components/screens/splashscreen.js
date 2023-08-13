@@ -22,8 +22,8 @@ const SplashScreen = ({ navigation }) => {
 
         const interval = setInterval(() => {
             clearInterval(interval);
-            navigation.navigate('TabNavigaton');
             dispatch(setRedux(false, "FIRST_LAUNCH"));
+            navigation.navigate('TabNavigaton');
         }, 500)
     };
 

@@ -50,7 +50,7 @@ export const GenericDialog = ({ backgroundColor, foregroundColor, textColor, pla
                     placeholder="0.00"
                     placeholderTextColor={placeholderTextColor}
                     style={{ ...styles.text_input, color: textColor }}
-                    value={value}
+                    value={value == '0' ? null : String(value)}
                     inputMode='numeric'
                     onChangeText={value => setValue(enterAmount(value))}
                 />

@@ -6,7 +6,7 @@ const headerHeight = 350;
 
 export const styles = StyleSheet.create({
     container: {
-        height: headerHeight + 70
+        height: headerHeight + 20
     },
     dashboard: {
         width: width,

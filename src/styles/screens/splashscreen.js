@@ -19,6 +19,6 @@ export const styles = StyleSheet.create({
     animation: {
         position: 'absolute',
         width: 150,
-        bottom: height * 0.2 + 10
+        bottom: height * 0.2
     }
 });

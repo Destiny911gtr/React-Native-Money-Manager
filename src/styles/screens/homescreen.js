@@ -50,6 +50,7 @@ export const styles = StyleSheet.create({
     list_view: {
         flex: 1,
         width: width,
+        zIndex: -1,
         paddingHorizontal: 15
     },
     bal_box: {
@@ -68,7 +69,7 @@ export const styles = StyleSheet.create({
         width: width
     },
     placeholder_text: {
-        padding: 20,
+        paddingTop: 80,
         fontSize: 15,
         fontFamily: 'Open Sans',
     },

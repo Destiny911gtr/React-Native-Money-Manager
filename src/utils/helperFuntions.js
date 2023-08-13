@@ -1,5 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from "moment";
+import { MMKV } from 'react-native-mmkv';
+
+const storage = new MMKV();
 
 export const enterAmount = amount => {
     const cleanedText = amount.replace(/[^0-9.]/g, '');
@@ -23,17 +25,17 @@ export const renderDescription = desc => {
     return formattedDesc;
 }
 
-export const storeData = (key, value) => {
-    const storeValue = async () => {
-        try {
-            await AsyncStorage.setItem(key, value)
-        } catch (e) {
-            console.error(e);
-        }
-    }
-    storeValue();
-}
-
-export const getData = async (key) => {
-    return await AsyncStorage.getItem(key);
-}
+export const reduxStorage = {
+    setItem: (key, value) => {
+        storage.set(key, value);
+        return Promise.resolve(true);
+    },
+    getItem: key => {
+        const value = storage.getString(key);
+        return Promise.resolve(value);
+    },
+    removeItem: key => {
+        storage.delete(key);
+        return Promise.resolve();
+    },
+};

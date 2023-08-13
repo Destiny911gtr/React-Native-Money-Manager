@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { ProgressBar, Text } from "react-native-paper";
 import { connect } from "react-redux";
 
@@ -15,8 +15,9 @@ const mapStateToProps = (state) => ({
 
 const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balanceDialog, primary, secondary, textColor }) => {
 
-    var currentBal = initialBalance - spent;
-    var balancePercentage = initialBalance == '0' ? 0 : parseFloat(balance / initialBalance);
+    let currentBal = initialBalance - spent;
+    let balancePercentage = initialBalance == '0' || initialBalance == '' ? 0 : parseFloat(balance / initialBalance);
+    let limitPercentage = limit == '0' ? 0 : parseFloat(spent / limit);
 
     limitTrigger = () => {
         console.log(balance, initialBalance, balancePercentage);
@@ -37,14 +38,14 @@ const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balance
     )
 
     const LimitWidget = () => (
-        <TouchableOpacity
+        <Pressable
             onPress={limitTrigger}
             style={styles.limit_box}>
             <View>
                 <Text style={styles.label_style}>Your limit</Text>
                 <Text style={styles.value_style}>₹{limit}</Text>
             </View>
-        </TouchableOpacity>
+        </Pressable>
     )
 
     const ExpWidget = () => (
@@ -58,14 +59,14 @@ const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balance
     )
 
     const BalanceWidget = () => (
-        <TouchableOpacity
+        <Pressable
             onPress={balanceTrigger}
             style={styles.bal_box}>
             <View>
                 <Text style={styles.label_style}>Balance</Text>
                 <Text numberOfLines={1} style={styles.value_style}>₹{currentBal}</Text>
             </View>
-        </TouchableOpacity>
+        </Pressable>
     )
 
     return (
@@ -76,8 +77,10 @@ const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balance
             }}>
                 <GreetWidget />
                 <View style={styles.animation_view}>
+                    <Text>Balance</Text>
                     <ProgressBar progress={balancePercentage} color={"rgba(0, 255, 225, 0.75)"} style={styles.progress_bar} />
-                    <ProgressBar progress={0.5} color={"rgba(0, 255, 225, 0.75)"} style={styles.progress_bar} />
+                    <ProgressBar progress={limitPercentage} color={"rgba(0, 255, 225, 0.75)"} style={styles.progress_bar} />
+                    <Text>Limit</Text>
                 </View>
                 <View style={{
                     ...styles.info_row,

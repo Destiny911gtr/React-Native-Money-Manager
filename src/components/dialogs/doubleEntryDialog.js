@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../../styles/dialogs/doubleEntryDialog';
 import { enterAmount } from '../../utils/helperFuntions';
 
-export const DoubleEntryDialog = ({ backgroundColor, foregroundColor, textColor, placeholderTextColor, onSet, trigger, onDismiss, defaultValue1, defaultValue2, title, description, icon }) => {
+export const DoubleEntryDialog = ({ backgroundColor, foregroundColor, textColor, placeholderText, placeholderTextColor, onSet, trigger, onDismiss, defaultValue1, defaultValue2, title, description, icon }) => {
 
     const [value1, setValue1] = useState(defaultValue1 ? defaultValue1 : '');
     const [value2, setValue2] = useState(defaultValue2 ? defaultValue2 : '');
@@ -49,13 +49,13 @@ export const DoubleEntryDialog = ({ backgroundColor, foregroundColor, textColor,
                     placeholder="0.00"
                     placeholderTextColor={placeholderTextColor}
                     style={{ ...styles.text_input, color: textColor }}
-                    value={value1}
+                    value={value1 == 0 ? null : String(value1)}
                     inputMode='numeric'
                     onChangeText={value1 => setValue1(enterAmount(value1))}
                 />
                 <TextInput
                     label="Description"
-                    placeholder="Coffee at Starbucks"
+                    placeholder={placeholderText}
                     placeholderTextColor={placeholderTextColor}
                     style={{ ...styles.text_input, color: textColor }}
                     value={value2}

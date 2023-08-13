@@ -9,11 +9,12 @@ import {
     useTheme
 } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
+import RealmPlugin from 'realm-flipper-plugin-device';
 
 import { addExpense, removeExpense, setBalance, setInitBalance, setLimit } from '../../actions/homeScreenActions';
 import { itemStyle, styles } from '../../styles/screens/homescreen';
 import { Expenditure, realmConfig } from '../../utils/database';
-import { dateConvertor, renderDescription, storeData } from '../../utils/helperFuntions';
+import { dateConvertor, renderDescription } from '../../utils/helperFuntions';
 import { DoubleEntryDialog } from '../dialogs/doubleEntryDialog';
 import { GenericDialog } from '../dialogs/genericDialog';
 import Dashboard from '../modules/dashboard';
@@ -52,8 +53,6 @@ const Homescreen = () => {
     };
 
     const deleteFromDb = (item) => {
-        storeData('@balance', String(parseFloat(balance) + parseFloat(item.amount)));
-        storeData('@spent', String(parseFloat(spent) - parseFloat(item.amount)));
         rmRdxExpense(item.amount);
         realm.write(() => {
             realm.delete(item);
@@ -83,8 +82,6 @@ const Homescreen = () => {
 
     const addToRdxList = (amount, description) => {
         writeToDb(getUniqueString(), parseFloat(amount), description);
-        storeData('@balance', String(parseFloat(balance) - parseFloat(amount)));
-        storeData('@spent', String(parseFloat(spent) + parseFloat(amount)));
         setRdxExpense(amount);
     };
 
@@ -128,7 +125,17 @@ const Homescreen = () => {
         />
     );
 
+    const HeaderItem = () => (
+        <List.Item
+            style={{
+                height: 55,
+            }}
+        />
+    );
+
     const renderFooterItem = () => <FooterItem />;
+
+    const renderHeaderItem = () => <HeaderItem />;
 
     const renderItem = ({ item }) => (
         <Item id={item._id} amount={item.amount} description={item.desc} date={item.date} item={item} />
@@ -137,6 +144,8 @@ const Homescreen = () => {
     return (
         <View
             style={{ ...styles.screen, backgroundColor: theme.colors.background }}>
+            {/* Flipper realm db plugin */}
+            {__DEV__ && <RealmPlugin realms={[realmConfig.useRealm()]} />}
             <StatusBar barStyle={statusBarStyle} backgroundColor="transparent" translucent={true} />
             <View style={styles.home_view}>
                 <Dashboard
@@ -152,6 +161,7 @@ const Homescreen = () => {
                         data={listData}
                         renderItem={renderItem}
                         ListFooterComponent={renderFooterItem}
+                        ListHeaderComponent={renderHeaderItem}
                         keyExtractor={item => item._id}
                     />
                 )}
@@ -201,11 +211,11 @@ const Homescreen = () => {
                     backgroundColor={theme.colors.background}
                     foregroundColor={theme.colors.secondary}
                     textColor={theme.colors.onSurface}
+                    placeholderText={"Coffee at Starbucks"}
                     placeholderTextColor={theme.colors.onSurfaceDisabled}
                     onSet={addToRdxList}
                     onDismiss={setAddVisibility}
                     trigger={addModalVisible}
-                    defaultValue1={spent}
                     title={"Add Expense"}
                     description={"Enter the amount and set a description to remind yourself"}
                     icon={"cash-plus"}
