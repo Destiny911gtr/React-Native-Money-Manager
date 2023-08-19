@@ -1,9 +1,11 @@
-import { Pressable, View } from "react-native";
-import { ProgressBar, Text } from "react-native-paper";
+import { TouchableOpacity, View } from "react-native";
+import { Text } from "react-native-paper";
 import { connect } from "react-redux";
 
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { memo, useMemo } from "react";
 import { styles } from "../../styles/modules/dashboard";
 
 const mapStateToProps = (state) => ({
@@ -16,11 +18,10 @@ const mapStateToProps = (state) => ({
 const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balanceDialog, primary, secondary, textColor }) => {
 
     let currentBal = initialBalance - spent;
-    let balancePercentage = initialBalance == '0' || initialBalance == '' ? 0 : parseFloat(balance / initialBalance);
-    let limitPercentage = limit == '0' ? 0 : parseFloat(spent / limit);
+    let balancePercentage = initialBalance == '0' || initialBalance == '' ? 0 : parseFloat(balance / initialBalance) * 100;
+    let limitPercentage = limit == '0' ? 0 : parseFloat(spent / limit) * 100;
 
     limitTrigger = () => {
-        console.log(balance, initialBalance, balancePercentage);
         limitDialog();
     }
 
@@ -38,14 +39,14 @@ const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balance
     )
 
     const LimitWidget = () => (
-        <Pressable
+        <TouchableOpacity
             onPress={limitTrigger}
             style={styles.limit_box}>
             <View>
                 <Text style={styles.label_style}>Your limit</Text>
                 <Text style={styles.value_style}>₹{limit}</Text>
             </View>
-        </Pressable>
+        </TouchableOpacity>
     )
 
     const ExpWidget = () => (
@@ -59,40 +60,78 @@ const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balance
     )
 
     const BalanceWidget = () => (
-        <Pressable
+        <TouchableOpacity
             onPress={balanceTrigger}
             style={styles.bal_box}>
             <View>
                 <Text style={styles.label_style}>Balance</Text>
                 <Text numberOfLines={1} style={styles.value_style}>₹{currentBal}</Text>
+                <Text numberOfLines={1} style={styles.value_sub}>of ₹{initialBalance}</Text>
             </View>
-        </Pressable>
+        </TouchableOpacity>
     )
+
+    const HalfProgresBar = ({ progress }) => {
+        const circularProgressBar = useMemo(() => (
+            <AnimatedCircularProgress
+                size={90}
+                width={8}
+                rotation={195}
+                lineCap="round"
+                fill={progress}
+                arcSweepAngle={150}
+                tintColor="#00e0ff"
+                backgroundColor="rgba(0, 0, 0, 0.15)"
+                style={{ borderRadius: 100 }}
+            />
+        ), [progress]);
+
+        return circularProgressBar;
+    };
+
+    const DashboardContent = () => {
+        const widgets = useMemo(() => (
+            <View style={{
+                ...styles.info_row,
+                backgroundColor: primary,
+                borderColor: "rgba" + String(primary).split("rgb")[1].split(")")[0] + ", 0.5)"
+            }}>
+                <View style={styles.progress_bar_left}>
+                    <HalfProgresBar
+                        progress={limitPercentage}
+                    />
+                </View>
+                <LimitWidget />
+                <ExpWidget />
+                <BalanceWidget />
+                <View style={styles.progress_bar_right}>
+                    <HalfProgresBar
+                        progress={balancePercentage}
+                    />
+                </View>
+            </View>
+        ), [limit, spent, balance, limitPercentage, balancePercentage]);
+
+        return widgets;
+    };
 
     return (
         <View style={styles.container}>
             <View style={{
                 ...styles.dashboard,
-                backgroundColor: secondary
+                backgroundColor: secondary,
             }}>
                 <GreetWidget />
-                <View style={styles.animation_view}>
+                {/* <View style={styles.animation_view}>
                     <Text>Balance</Text>
                     <ProgressBar progress={balancePercentage} color={"rgba(0, 255, 225, 0.75)"} style={styles.progress_bar} />
                     <ProgressBar progress={limitPercentage} color={"rgba(0, 255, 225, 0.75)"} style={styles.progress_bar} />
                     <Text>Limit</Text>
-                </View>
-                <View style={{
-                    ...styles.info_row,
-                    backgroundColor: primary
-                }}>
-                    <LimitWidget />
-                    <ExpWidget />
-                    <BalanceWidget />
-                </View>
+                </View> */}
+                <DashboardContent />
             </View>
         </View>
     );
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(memo(Dashboard));

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View, BackHandler } from 'react-native';
 import { Button, FAB, IconButton, List, Modal, Portal, Text, TextInput, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -18,6 +18,13 @@ const Secondscreen = () => {
     const [newExpValue, setNewExp] = useState();
     const [newExpDescValue, setNewExpDesc] = useState('');
     const addModalTrigger = () => setAddVisibility(!addModalVisible);
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', function () {
+            BackHandler.exitApp();
+        });
+        return () => backHandler.remove();
+    }, [])
 
     const Fab = () => (
         <FAB

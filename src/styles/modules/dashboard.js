@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import {StatusBar} from 'react-native';
+import { StatusBar } from 'react-native';
 
 const { height, width } = Dimensions.get("window");
 const headerHeight = 350;
@@ -29,18 +29,36 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#fff'
     },
+    progress_bar_left: {
+        zIndex: -1,
+        marginRight: -70,
+        marginLeft: -10,
+        marginBottom: -14
+    },
+    progress_bar_right: {
+        zIndex: -1,
+        marginLeft: -70,
+        marginRight: -10,
+        marginBottom: -14,
+        transform: [
+            { scaleX: -1 }
+        ]
+    },
     header_text: {
         fontSize: 15,
         fontFamily: 'Open Sans',
     },
     info_row: {
         elevation: 10,
-        top: headerHeight - 50,
+        top: headerHeight - 57,
         left: 25,
         width: width - 50,
         borderRadius: 60,
+        borderWidth: 7,
         paddingHorizontal: 15,
         paddingBottom: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
         flexDirection: 'row',
         position: 'absolute',
     },
@@ -51,6 +69,11 @@ export const styles = StyleSheet.create({
     },
     value_style: {
         fontSize: 20,
+        fontFamily: 'Open Sans',
+        textAlign: 'center',
+    },
+    value_sub: {
+        fontSize: 10,
         fontFamily: 'Open Sans',
         textAlign: 'center',
     },

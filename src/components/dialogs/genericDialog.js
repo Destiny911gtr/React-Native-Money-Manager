@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { View } from "react-native";
 import { Button, Modal, Text, TextInput } from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,7 +8,7 @@ import { enterAmount } from '../../utils/helperFuntions';
 import { useSelector } from "react-redux";
 
 
-export const GenericDialog = ({ backgroundColor, foregroundColor, textColor, placeholderTextColor, onSet, trigger, onDismiss, defaultValue, title, description, icon }) => {
+const GenericDialog = ({ backgroundColor, foregroundColor, textColor, placeholderTextColor, onSet, trigger, onDismiss, defaultValue, title, description, icon }) => {
 
     const [value, setValue] = useState(defaultValue ? defaultValue : '');
 
@@ -17,6 +17,7 @@ export const GenericDialog = ({ backgroundColor, foregroundColor, textColor, pla
     }
 
     const dismissDialog = () => {
+        setValue('');
         onDismiss();
     }
 
@@ -71,3 +72,5 @@ export const GenericDialog = ({ backgroundColor, foregroundColor, textColor, pla
         </Modal>
     );
 };
+
+export default memo(GenericDialog);

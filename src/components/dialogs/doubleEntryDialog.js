@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { View } from "react-native";
 import { Button, Modal, Text, TextInput } from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../../styles/dialogs/doubleEntryDialog';
 import { enterAmount } from '../../utils/helperFuntions';
 
-export const DoubleEntryDialog = ({ backgroundColor, foregroundColor, textColor, placeholderText, placeholderTextColor, onSet, trigger, onDismiss, defaultValue1, defaultValue2, title, description, icon }) => {
+const DoubleEntryDialog = ({ backgroundColor, foregroundColor, textColor, placeholderText, placeholderTextColor, onSet, trigger, onDismiss, defaultValue1, defaultValue2, title, description, icon }) => {
 
     const [value1, setValue1] = useState(defaultValue1 ? defaultValue1 : '');
     const [value2, setValue2] = useState(defaultValue2 ? defaultValue2 : '');
@@ -80,3 +80,5 @@ export const DoubleEntryDialog = ({ backgroundColor, foregroundColor, textColor,
         </Modal>
     );
 };
+
+export default memo(DoubleEntryDialog);

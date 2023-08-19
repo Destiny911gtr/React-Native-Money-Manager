@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, StatusBar, View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FlatList, StatusBar, View, BackHandler } from 'react-native';
 import {
     FAB,
     IconButton,
@@ -15,8 +15,8 @@ import { addExpense, removeExpense, setBalance, setInitBalance, setLimit } from 
 import { itemStyle, styles } from '../../styles/screens/homescreen';
 import { Expenditure, realmConfig } from '../../utils/database';
 import { dateConvertor, renderDescription } from '../../utils/helperFuntions';
-import { DoubleEntryDialog } from '../dialogs/doubleEntryDialog';
-import { GenericDialog } from '../dialogs/genericDialog';
+import DoubleEntryDialog from '../dialogs/doubleEntryDialog';
+import GenericDialog from '../dialogs/genericDialog';
 import Dashboard from '../modules/dashboard';
 
 const { useRealm, useQuery } = realmConfig;
@@ -29,7 +29,6 @@ const Homescreen = () => {
     const listData = useQuery(Expenditure);
     const limit = useSelector(state => state.limit);
     const balance = useSelector(state => state.balance);
-    const spent = useSelector(state => state.spent);
     const [statusBarStyle, setStatusBarStyle] = useState(barStyles[0]);
     const [addModalVisible, setAddVisibility] = useState(false);
     const [limitDialogVisible, setLimitVisibility] = useState(false);
@@ -40,6 +39,10 @@ const Homescreen = () => {
 
     useEffect(() => {
         setStatusBarColor();
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', function () {
+            BackHandler.exitApp();
+        });
+        return () => backHandler.remove();
     }, []);
 
     const setStatusBarColor = () => {
@@ -101,7 +104,7 @@ const Homescreen = () => {
             description={renderDescription(description) + '\n' + dateConvertor(date)}
             descriptionNumberOfLines={2}
             style={{
-                ...itemStyle(id, listData),
+                ...useMemo(() => itemStyle(id, listData), [listData]),
                 backgroundColor: theme.colors.backdrop,
             }}
             left={props => <List.Icon {...props} icon="cash-multiple" />}
@@ -141,6 +144,35 @@ const Homescreen = () => {
         <Item id={item._id} amount={item.amount} description={item.desc} date={item.date} item={item} />
     );
 
+    const ListView = () => {
+        const List = useMemo(() => {
+            if (listData != 0) {
+                return (
+                    <FlatList
+                        style={styles.list_view}
+                        data={listData}
+                        renderItem={renderItem}
+                        ListFooterComponent={renderFooterItem}
+                        ListHeaderComponent={renderHeaderItem}
+                        keyExtractor={item => item._id}
+                    />
+                );
+            } else {
+                <View style={styles.placeholder}>
+                    <Text
+                        style={{
+                            ...styles.placeholder_text,
+                            color: theme.colors.onSurfaceVariant,
+                        }}>
+                        No entries yet
+                    </Text>
+                </View>
+            }
+        }, [listData]);
+
+        return List;
+    };
+
     return (
         <View
             style={{ ...styles.screen, backgroundColor: theme.colors.background }}>
@@ -155,27 +187,7 @@ const Homescreen = () => {
                     limitDialog={limitModalTrigger}
                     balanceDialog={balanceModalTrigger}
                 />
-                {listData != 0 && (
-                    <FlatList
-                        style={styles.list_view}
-                        data={listData}
-                        renderItem={renderItem}
-                        ListFooterComponent={renderFooterItem}
-                        ListHeaderComponent={renderHeaderItem}
-                        keyExtractor={item => item._id}
-                    />
-                )}
-                {listData == 0 && (
-                    <View style={styles.placeholder}>
-                        <Text
-                            style={{
-                                ...styles.placeholder_text,
-                                color: theme.colors.onSurfaceVariant,
-                            }}>
-                            No entries yet
-                        </Text>
-                    </View>
-                )}
+                <ListView />
             </View>
             <Portal>
                 {/* Set Limit Dialog */}
