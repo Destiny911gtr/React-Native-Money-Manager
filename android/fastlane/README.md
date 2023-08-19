@@ -21,7 +21,15 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane android build
 ```
 
-Build a new apk
+Build a new release apk with version bump
+
+### android test_build
+
+```sh
+[bundle exec] fastlane android test_build
+```
+
+Build a new release apk without version bump
 
 ----
 

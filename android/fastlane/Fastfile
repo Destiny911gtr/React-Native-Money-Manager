@@ -16,11 +16,22 @@
 default_platform(:android)
 
 platform :android do
-  desc "Build a new apk"
+  desc "Build a new release apk with version bump"
   lane :build do
+    gradle(task: "clean")
     increment_version_name(app_project_dir: '**/app', bump_type: 'patch')
     increment_version_code(app_project_dir: '**/app')
+    sh "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output ../app/src/main/assets/index.android.bundle --assets-dest ../app/src/main/res/"
+    sh "rm -rf ../app/src/main/res/drawable-*"
+    gradle(task: "assembleRelease")
+    sh("dolphin ../app/build/outputs/apk/release/")
+  end
+
+  desc "Build a new release apk without version bump"
+  lane :test_build do
     gradle(task: "clean")
+    sh "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output ../app/src/main/assets/index.android.bundle --assets-dest ../app/src/main/res/"
+    sh "rm -rf ../app/src/main/res/drawable-*"
     gradle(task: "assembleRelease")
     sh("dolphin ../app/build/outputs/apk/release/")
   end
