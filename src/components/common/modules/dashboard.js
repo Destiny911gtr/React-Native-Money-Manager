@@ -18,7 +18,7 @@ const mapStateToProps = (state) => ({
 const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balanceDialog, primary, secondary, textColor }) => {
 
     let currentBal = initialBalance - spent;
-    let balancePercentage = initialBalance == '0' || initialBalance == '' ? 0 : parseFloat(balance / initialBalance) * 100;
+    let balancePercentage = initialBalance == '0' || initialBalance == '' ? 0 : parseFloat(currentBal / initialBalance) * 100;
     let limitPercentage = limit == '0' ? 0 : parseFloat(spent / limit) * 100;
 
     limitTrigger = () => {
@@ -43,20 +43,25 @@ const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balance
             onPress={limitTrigger}
             style={styles.limit_box}>
             <View>
-                <Text style={styles.label_style}>Your limit</Text>
-                <Text style={styles.value_style}>₹{limit}</Text>
+                <Text style={styles.label_style}>Limit</Text>
+                <Text style={styles.value_style}>₹{limit - spent}</Text>
+                <Text style={styles.value_sub}>of ₹{limit} left</Text>
             </View>
         </TouchableOpacity>
     )
 
     const ExpWidget = () => (
-        <View
-            style={styles.exp_box}>
-            <View>
-                <Text style={styles.label_style}>You've Spent</Text>
-                <Text numberOfLines={1} style={styles.value_style}>₹{spent}</Text>
+        <TouchableOpacity
+            onPress={limitTrigger}
+            style={styles.limit_box}>
+            <View
+                style={styles.exp_box}>
+                <View>
+                    <Text style={styles.label_style}>You've Spent</Text>
+                    <Text numberOfLines={1} style={styles.value_style}>₹{spent}</Text>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 
     const BalanceWidget = () => (
@@ -96,14 +101,21 @@ const Dashboard = ({ limit, spent, balance, initialBalance, limitDialog, balance
                 backgroundColor: primary,
                 borderColor: "rgba" + String(primary).split("rgb")[1].split(")")[0] + ", 0.5)"
             }}>
-                <View style={styles.progress_bar_left}>
+                {limit == 0 && <View style={styles.progress_bar_left}>
+                    <HalfProgresBar
+                        progress={balancePercentage}
+                    />
+                </View>}
+                {limit != 0 && <View style={styles.progress_bar_left}>
                     <HalfProgresBar
                         progress={limitPercentage}
                     />
+                </View>}
+                <View style={{ paddingHorizontal: 30, flexDirection: 'row' }}>
+                    {limit != 0 && <LimitWidget />}
+                    <ExpWidget />
+                    <BalanceWidget />
                 </View>
-                <LimitWidget />
-                <ExpWidget />
-                <BalanceWidget />
                 <View style={styles.progress_bar_right}>
                     <HalfProgresBar
                         progress={balancePercentage}

@@ -1,12 +1,12 @@
 import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 
-import { reduxStorage } from '../utils/helperFuntions';
+import { mmkv } from '../utils/helperFuntions';
 import homeScreen from './reducers/reducers';
 
 const persistConfig = {
     key: 'root',
-    storage: reduxStorage
+    storage: mmkv
 }
 
 const middlewares = [

@@ -30,16 +30,14 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     progress_bar_left: {
+        position: 'absolute',
+        left: 10,
         zIndex: -1,
-        marginRight: -70,
-        marginLeft: -10,
-        marginBottom: -14
     },
     progress_bar_right: {
+        position: 'absolute',
+        right: 10,
         zIndex: -1,
-        marginLeft: -70,
-        marginRight: -10,
-        marginBottom: -14,
         transform: [
             { scaleX: -1 }
         ]

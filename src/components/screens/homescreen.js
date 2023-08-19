@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import RealmPlugin from 'realm-flipper-plugin-device';
 
-import { addExpense, removeExpense, setBalance, setInitBalance, setLimit } from '../../redux/actions/actions';
+import { addExpense, removeExpense, setBalance, setExpense, setInitBalance, setLimit } from '../../redux/actions/actions';
 import { itemStyle, styles } from '../styles/screens/homescreen';
 import { Expenditure, realmConfig } from '../../utils/database';
 import { dateConvertor, renderDescription } from '../../utils/helperFuntions';
@@ -75,8 +75,8 @@ const Homescreen = () => {
         dispatch(setInitBalance(balance));
     };
 
-    const setRdxExpense = expense => {
-        dispatch(addExpense(expense));
+    const setRdxExpense = () => {
+        dispatch(setExpense(listData.sum('amount')));
     }
 
     const rmRdxExpense = expense => {
@@ -98,27 +98,30 @@ const Homescreen = () => {
         />
     );
 
-    const Item = ({ id, amount, description, date, item }) => (
-        <List.Item
-            title={'₹' + amount}
-            description={renderDescription(description) + '\n' + dateConvertor(date)}
-            descriptionNumberOfLines={2}
-            style={{
-                ...useMemo(() => itemStyle(id, listData), [listData]),
-                backgroundColor: theme.colors.backdrop,
-            }}
-            left={props => <List.Icon {...props} icon="cash-multiple" />}
-            right={props => (
-                <IconButton
-                    {...props}
-                    iconColor={theme.colors.error}
-                    icon="delete-outline"
-                    mode="contained-tonal"
-                    onPress={() => deleteFromDb(item)}
-                />
-            )}
-        />
-    );
+    const Item = ({ id, amount, description, date, item }) => {
+        const ListItem = useMemo(() => (
+            <List.Item
+                title={'₹' + amount}
+                description={renderDescription(description) + '\n' + dateConvertor(date)}
+                descriptionNumberOfLines={2}
+                style={{
+                    ...itemStyle(id, listData),
+                    backgroundColor: theme.colors.backdrop,
+                }}
+                left={() => <List.Icon style={{ alignItems: 'center', paddingLeft: 20, paddingRight: 10 }} icon="cash-multiple" />}
+                right={() => (
+                    <IconButton
+                        iconColor={theme.colors.error}
+                        icon="delete-outline"
+                        mode="contained-tonal"
+                        onPress={() => deleteFromDb(item)}
+                    />
+                )}
+            />
+        ), []);
+
+        return ListItem;
+    };
 
     const FooterItem = () => (
         <List.Item
@@ -146,36 +149,23 @@ const Homescreen = () => {
 
     const ListView = () => {
         const List = useMemo(() => {
-            if (listData != 0) {
-                return (
-                    <FlatList
-                        style={styles.list_view}
-                        data={listData}
-                        renderItem={renderItem}
-                        ListFooterComponent={renderFooterItem}
-                        ListHeaderComponent={renderHeaderItem}
-                        keyExtractor={item => item._id}
-                    />
-                );
-            } else {
-                <View style={styles.placeholder}>
-                    <Text
-                        style={{
-                            ...styles.placeholder_text,
-                            color: theme.colors.onSurfaceVariant,
-                        }}>
-                        No entries yet
-                    </Text>
-                </View>
-            }
-        }, [listData]);
+            return (
+                <FlatList
+                    style={styles.list_view}
+                    data={listData}
+                    renderItem={renderItem}
+                    ListFooterComponent={renderFooterItem}
+                    ListHeaderComponent={renderHeaderItem}
+                    keyExtractor={item => item._id}
+                />
+            );
+        }, [listData.length]);
 
         return List;
     };
 
     return (
-        <View
-            style={{ ...styles.screen, backgroundColor: theme.colors.background }}>
+        <View style={{ ...styles.screen, backgroundColor: theme.colors.background }}>
             {/* Flipper realm db plugin */}
             {__DEV__ && <RealmPlugin realms={[realmConfig.useRealm()]} />}
             <StatusBar barStyle={statusBarStyle} backgroundColor="transparent" translucent={true} />
@@ -187,7 +177,17 @@ const Homescreen = () => {
                     limitDialog={limitModalTrigger}
                     balanceDialog={balanceModalTrigger}
                 />
-                <ListView />
+                {listData.length != 0 && <ListView />}
+                {listData.length == 0 &&
+                    <View style={styles.placeholder}>
+                        <Text
+                            style={{
+                                ...styles.placeholder_text,
+                                color: theme.colors.onSurfaceVariant,
+                            }}>
+                            No entries yet
+                        </Text>
+                    </View>}
             </View>
             <Portal>
                 {/* Set Limit Dialog */}
