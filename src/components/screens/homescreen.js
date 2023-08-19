@@ -11,13 +11,13 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import RealmPlugin from 'realm-flipper-plugin-device';
 
-import { addExpense, removeExpense, setBalance, setInitBalance, setLimit } from '../../actions/homeScreenActions';
-import { itemStyle, styles } from '../../styles/screens/homescreen';
+import { addExpense, removeExpense, setBalance, setInitBalance, setLimit } from '../../redux/actions/actions';
+import { itemStyle, styles } from '../styles/screens/homescreen';
 import { Expenditure, realmConfig } from '../../utils/database';
 import { dateConvertor, renderDescription } from '../../utils/helperFuntions';
-import DoubleEntryDialog from '../dialogs/doubleEntryDialog';
-import GenericDialog from '../dialogs/genericDialog';
-import Dashboard from '../modules/dashboard';
+import DoubleEntryDialog from '../common/dialogs/doubleEntryDialog';
+import GenericDialog from '../common/dialogs/genericDialog';
+import Dashboard from '../common/modules/dashboard';
 
 const { useRealm, useQuery } = realmConfig;
 

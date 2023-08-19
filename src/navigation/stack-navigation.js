@@ -4,7 +4,7 @@ import { TransitionPresets } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
 import { useFlipper } from '@react-navigation/devtools';
 
-import SplashScreen from '../screens/splashscreen';
+import SplashScreen from '../components/screens/splashscreen';
 import TabNavigaton from './tab-navigaton';
 
 const Stack = createStackNavigator();

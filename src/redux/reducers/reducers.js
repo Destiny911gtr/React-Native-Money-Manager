@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, FIRST_LAUNCH, INIT_BAL, REMOVE_EXPENSE, SET_BAL, SET_EXPENSE, SET_LIMIT } from '../actions/types';
+import { ADD_EXPENSE, FIRST_LAUNCH, INIT_BAL, REMOVE_EXPENSE, SET_BAL, SET_EXPENSE, SET_LIMIT } from '../types/types';
 
 const initialState = {
   limit: '0',

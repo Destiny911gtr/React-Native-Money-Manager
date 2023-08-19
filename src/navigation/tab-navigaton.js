@@ -5,8 +5,8 @@ import { CommonActions, NavigationContainer } from '@react-navigation/native';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Homescreen from '../screens/homescreen';
-import Secondscreen from '../screens/secondscreen';
+import Homescreen from '../components/screens/homescreen';
+import Secondscreen from '../components/screens/secondscreen';
 
 const Tab = createBottomTabNavigator();
 

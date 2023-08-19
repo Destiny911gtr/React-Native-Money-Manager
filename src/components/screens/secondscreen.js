@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Expenditure, realmConfig } from '../../utils/database';
 
-import { styles } from '../../styles/screens/secondscreen';
+import { styles } from '../styles/screens/secondscreen';
 import { enterAmount } from '../../utils/helperFuntions';
 
 const { useRealm, useQuery } = realmConfig;

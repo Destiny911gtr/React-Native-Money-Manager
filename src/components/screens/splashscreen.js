@@ -5,8 +5,8 @@ import { useTheme } from "react-native-paper";
 import { useDispatch } from "react-redux";
 
 import lottieWallet from "../../assets/lottie/wallet.json";
-import { styles } from "../../styles/screens/splashscreen";
-import { setRedux } from "../../actions/homeScreenActions";
+import { styles } from "../styles/screens/splashscreen";
+import { setRedux } from "../../redux/actions/actions";
 
 const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();

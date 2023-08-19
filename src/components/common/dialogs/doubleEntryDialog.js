@@ -4,7 +4,7 @@ import { Button, Modal, Text, TextInput } from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { styles } from '../../styles/dialogs/doubleEntryDialog';
-import { enterAmount } from '../../utils/helperFuntions';
+import { enterAmount } from '../../../utils/helperFuntions';
 
 const DoubleEntryDialog = ({ backgroundColor, foregroundColor, textColor, placeholderText, placeholderTextColor, onSet, trigger, onDismiss, defaultValue1, defaultValue2, title, description, icon }) => {
 

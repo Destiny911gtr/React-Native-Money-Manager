@@ -4,7 +4,7 @@ import { Button, Modal, Text, TextInput } from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { styles } from '../../styles/dialogs/genericDialog';
-import { enterAmount } from '../../utils/helperFuntions';
+import { enterAmount } from '../../../utils/helperFuntions';
 import { useSelector } from "react-redux";
 
 

@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, INIT_BAL, REMOVE_EXPENSE, SET_BAL, SET_EXPENSE, SET_LIMIT } from "./types";
+import { ADD_EXPENSE, INIT_BAL, REMOVE_EXPENSE, SET_BAL, SET_EXPENSE, SET_LIMIT } from "../types/types";
 
 // Action Creators
 export const setLimit = (value) => {

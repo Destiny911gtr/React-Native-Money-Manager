@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { ActivityIndicator, useTheme } from "react-native-paper";
 
-import { styles } from "../../styles/screens/loadingscreen";
+import { styles } from "../styles/screens/loadingscreen";
 
 const LoadingScreen = () => {
     const theme = useTheme();
