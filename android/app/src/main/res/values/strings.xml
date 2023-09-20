@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MYM_RN</string>
+    <string
+        moduleConfig="true"
+        name="CodePushDeploymentKey">
+        7RAJ-Hmy2-3MOZCC9zVFhc9SpWSs5J8rlnuiU
+    </string>
 </resources>
