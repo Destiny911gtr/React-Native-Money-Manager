@@ -10,7 +10,9 @@
     "test": "jest",
     "devtools": "react-devtools",
     "codepush": "appcenter codepush release-react -a dhanush911gtr/mym-rn -d Production",
-    "rollback": "appcenter codepush rollback -a dhanush911gtr/mym-rn Production"
+    "rollback": "appcenter codepush rollback -a dhanush911gtr/mym-rn Production",
+    "build": "cd android && bundle exec fastlane build && cd ..",
+    "no-inc-build": "cd android && bundle exec fastlane test_build && cd .."
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.5.7",

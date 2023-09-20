@@ -7,6 +7,7 @@
 
 import React, { useEffect } from 'react';
 
+import { ToastAndroid } from 'react-native';
 import codePush from "react-native-code-push";
 import { MMKV } from "react-native-mmkv";
 import { initializeMMKVFlipper } from "react-native-mmkv-flipper-plugin";
@@ -33,7 +34,29 @@ const MyApp = () => {
     codePush.sync({
       updateDialog: false,
       installMode: codePush.InstallMode.ON_NEXT_RESTART
-    });
+    },
+      (status) => {
+        switch (status) {
+          case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+            ToastAndroid.show('Checking for updates...', ToastAndroid.LONG);
+            break;
+          case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+            ToastAndroid.show('Downloading update...', ToastAndroid.LONG);
+            break;
+          case codePush.SyncStatus.INSTALLING_UPDATE:
+            ToastAndroid.show('Installing update...', ToastAndroid.LONG);
+            break;
+          case codePush.SyncStatus.UPDATE_INSTALLED:
+            ToastAndroid.show('Update installed and will be applied on next app restart.', ToastAndroid.LONG);
+            break;
+          case codePush.SyncStatus.UP_TO_DATE:
+            ToastAndroid.show('App is up to date.', ToastAndroid.LONG);
+            break;
+          case codePush.SyncStatus.SYNC_IN_PROGRESS:
+            console.log('Sync in progress...');
+            break;
+        }
+      });
   }, [])
 
   return (
